@@ -111,7 +111,8 @@ body {
   padding: 3px;
   overflow-x: auto;
   scrollbar-width: none;
-  flex-shrink: 0;
+  min-width: 0;
+  flex-shrink: 1;
 }
 .session-switcher::-webkit-scrollbar { display: none; }
 .session-tab {
@@ -209,6 +210,8 @@ body {
   padding: 10px 18px;
   height: 40px;
   cursor: pointer;
+  flex-shrink: 0;
+  white-space: nowrap;
   text-decoration: none;
   display: inline-flex;
   align-items: center;
@@ -990,6 +993,14 @@ footer {
     row-gap: 10px;
     padding: 12px 20px;
   }
+  .nav-cta {
+    position: fixed;
+    bottom: max(18px, calc(env(safe-area-inset-bottom) + 12px));
+    right: 18px;
+    z-index: 200;
+    border-radius: 9999px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.22);
+  }
   .nav-links {
     order: 3;
     flex-basis: 100%;
@@ -1030,7 +1041,7 @@ footer {
   .nav { padding: 12px 16px; gap: 10px; }
   .nav-left { gap: 10px; }
   .nav-links { gap: 16px; }
-  .nav-cta { font-size: 12px; padding: 7px 12px; height: 34px; }
+  .nav-cta { bottom: max(16px, calc(env(safe-area-inset-bottom) + 10px)); right: 16px; }
   .session-tab { padding: 6px 10px; font-size: 12px; }
   .tension-vs { flex-wrap: wrap; }
   .section-desc { font-size: 14px; }
@@ -1052,4 +1063,7 @@ footer {
   .cta-band h2 { font-size: 24px; letter-spacing: -0.3px; }
   .hero-label { font-size: 11px; }
   .hero-label svg { width: 28px; height: 13px; }
+  .nav-left { gap: 8px; }
+  .session-switcher { gap: 1px; padding: 2px; }
+  .session-tab { padding: 5px 8px; font-size: 11px; }
 }
