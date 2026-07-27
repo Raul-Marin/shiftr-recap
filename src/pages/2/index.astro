@@ -4,6 +4,6 @@ import RecapPage from '../../components/RecapPage.astro';
 import { recap02 } from '../../data/recap-02';
 ---
 
-<BaseLayout title={recap02.pageTitle}>
+<BaseLayout title={recap02.pageTitle} accent={recap02.accent} accentActive={recap02.accentActive}>
   <RecapPage recap={recap02} />
 </BaseLayout>

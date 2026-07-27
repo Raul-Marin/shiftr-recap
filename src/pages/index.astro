@@ -1,9 +1,121 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import RecapPage from '../components/RecapPage.astro';
-import { recap01 } from '../data/recap-01';
+import RecapLogo from '../components/RecapLogo.astro';
+import { recaps, upcomingSessions } from '../data';
+import { withBase } from '../lib/paths';
+
+const logoSrc = withBase('logo.jpg');
+const homeHref = withBase();
+
+const publishedDesc = [...recaps].filter((r) => r.published).sort((a, b) => b.number - a.number);
+const nextUpcoming = [...upcomingSessions].sort((a, b) => a.number - b.number)[0];
+
+const avatarFiles = ['avatar-1.png', 'avatar-2.png', 'avatar-3.png', 'avatar-4.png', 'avatar-5.png', 'avatar-6.png'];
+
+function hexToRgba(hex: string, alpha: number) {
+  const m = hex.replace('#', '');
+  const r = parseInt(m.substring(0, 2), 16);
+  const g = parseInt(m.substring(2, 4), 16);
+  const b = parseInt(m.substring(4, 6), 16);
+  return `rgba(${r},${g},${b},${alpha})`;
+}
 ---
 
-<BaseLayout title={recap01.pageTitle}>
-  <RecapPage recap={recap01} />
+<BaseLayout title="Re/cap · Shift+R — Investigación de la comunidad">
+  <nav class="nav">
+    <div class="nav-left">
+      <a class="nav-logo" href={homeHref}>
+        <img src={logoSrc} alt="Shift+R" style="height:36px;width:36px;border-radius:8px;display:block;" />
+      </a>
+    </div>
+    <a class="nav-cta" href="https://shiftr.pro" target="_blank" rel="noopener">Únete a Shift+R</a>
+  </nav>
+
+  <div class="hero">
+    <RecapLogo class="recap-logo-anim home-logo-mark" width={150} height={67} animated label="Re/cap" />
+    <div class="hero-label">Shift+R — Resumen de las sesiones</div>
+    <h1>Diseñadores sin filtro<br /><em>frente al cambio.</em></h1>
+    <p class="hero-sub">
+      Estas charlas de <a class="brand-link" href="https://shiftr.pro" target="_blank" rel="noopener">Shift+R</a>
+      reúnen cada dos meses a miembros de la comunidad para hablar sin filtros de cómo la IA está cambiando el
+      oficio: qué preocupa, qué ilusiona y qué merece la pena defender.
+    </p>
+
+    <div class="hero-avatars" id="hero-avatars">
+      {avatarFiles.map((a) => (
+        <img class="hero-avatars__item" src={withBase(`images/avatars/${a}`)} alt="" loading="lazy" />
+      ))}
+    </div>
+
+    {
+      nextUpcoming && (
+        <span class="upcoming-badge">
+          <span class="upcoming-badge__dot" />
+          Próxima sesión · {nextUpcoming.date} · Recap [{String(nextUpcoming.number).padStart(2, '0')}]
+        </span>
+      )
+    }
+  </div>
+
+  <hr class="section-divider" />
+
+  <div class="section">
+    <div class="section-label">Archivo</div>
+    <h2 class="section-title">Sesiones publicadas</h2>
+    <p class="section-desc">El resumen de cada sesión: los temas, las tensiones y los aprendizajes que dejó la conversación.</p>
+
+    <div class="session-grid">
+      {publishedDesc.map((r) => (
+        <a
+          class="session-card"
+          href={withBase(`${r.slug}/`)}
+          style={`--card-accent:${r.accent};--card-tint:${hexToRgba(r.accent, 0.14)}`}
+        >
+          {r.cover && (
+            <div class="session-card__cover">
+              <img src={withBase(`images/${r.cover}`)} alt="" loading="lazy" />
+              <span class="session-card__bignum">{String(r.number).padStart(2, '0')}</span>
+              <div class="session-card__tags">
+                <span class="session-card__tag">
+                  <span class="session-card__tag-dot" />
+                  Recap [{String(r.number).padStart(2, '0')}]
+                </span>
+                <span class="session-card__tag">{r.meta.find((m) => m.label === 'Fecha')?.value}</span>
+              </div>
+            </div>
+          )}
+          <div class="session-card__body">
+            <div class="session-card__title">
+              {r.headline} <em>{r.headlineEm}</em>
+            </div>
+            <p class="session-card__teaser">{r.teaser}</p>
+            <span class="session-card__cta">Ver informe</span>
+          </div>
+        </a>
+      ))}
+    </div>
+  </div>
+
+  <footer>
+    <span class="footer-logo">
+      <img
+        src={logoSrc}
+        alt="Shift+R"
+        style="height:32px;width:32px;border-radius:6px;display:inline-block;vertical-align:middle;"
+      />
+    </span>
+    <span class="footer-meta">Serie Re/cap · Comunidad Shift+R</span>
+  </footer>
 </BaseLayout>
+
+<script>
+  const stack = document.getElementById('hero-avatars');
+  if (stack) {
+    const items = Array.from(stack.children);
+    for (let i = items.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [items[i], items[j]] = [items[j], items[i]];
+    }
+    items.forEach((el) => stack.appendChild(el));
+  }
+</script>

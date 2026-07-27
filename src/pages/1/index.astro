@@ -1,0 +1,9 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import RecapPage from '../../components/RecapPage.astro';
+import { recap01 } from '../../data/recap-01';
+---
+
+<BaseLayout title={recap01.pageTitle} accent={recap01.accent} accentActive={recap01.accentActive}>
+  <RecapPage recap={recap01} />
+</BaseLayout>

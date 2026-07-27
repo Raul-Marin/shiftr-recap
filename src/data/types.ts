@@ -66,22 +66,24 @@ export interface ChartRadar {
   fallback: string;
 }
 
-export interface Announce {
-  href: string;
-  textHtml: string;
-}
-
 export interface Recap {
   slug: string;
   number: number;
+  /** Brand accent color for this session (hex). Overrides --primary to give each recap a subtle identity. */
+  accent: string;
+  /** Darker/active variant of accent (hex). Overrides --primary-active. */
+  accentActive: string;
+  /** Filename (in public/images/) of this session's cover illustration. */
+  cover: string;
   title: string;
   pageTitle: string;
   heroLabel: string;
   headline: string;
   headlineEm: string;
   subtitleHtml: string;
+  /** Plain-text one-liner used on the home page session cards. */
+  teaser: string;
   meta: MetaItem[];
-  announce: Announce;
   navCta: string;
   ideHeader: string;
   ideSignals: IdeSignal[];
@@ -102,4 +104,11 @@ export interface Recap {
   };
   footerMeta: string;
   published: boolean;
+}
+
+/** A session that's announced but not yet published — shown as "coming soon" on the home page. */
+export interface UpcomingSession {
+  number: number;
+  date: string;
+  note?: string;
 }

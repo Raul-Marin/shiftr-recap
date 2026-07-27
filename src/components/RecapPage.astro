@@ -1,5 +1,6 @@
 ---
 import type { Recap } from '../data/types';
+import { recaps, upcomingSessions } from '../data';
 import { withBase } from '../lib/paths';
 import RecapLogo from './RecapLogo.astro';
 
@@ -9,12 +10,6 @@ interface Props {
 
 const { recap } = Astro.props;
 
-function resolveHref(href: string) {
-  if (/^https?:\/\//.test(href)) return href;
-  return withBase(href === './' ? '' : href);
-}
-
-const announceHref = resolveHref(recap.announce.href);
 const homeHref = withBase();
 const logoSrc = withBase('logo.jpg');
 const hasCharts = recap.charts.temas.data.length > 0;
@@ -26,18 +21,57 @@ const badgeClass = {
   low: 'badge-low',
   minimal: 'badge-minimal',
 } as const;
+
+const sessions = [
+  ...recaps
+    .filter((r) => r.published)
+    .map((r) => ({
+      number: r.number,
+      accent: r.accent,
+      href: withBase(`${r.slug}/`),
+      active: r.slug === recap.slug,
+      upcoming: false,
+    })),
+  ...upcomingSessions.map((u) => ({
+    number: u.number,
+    accent: undefined,
+    href: undefined,
+    active: false,
+    upcoming: true,
+  })),
+].sort((a, b) => a.number - b.number);
 ---
 
-<a class="announce-bar" href={announceHref} rel="noopener">
-  <span class="announce-bar__dot"></span>
-  <RecapLogo class="announce-bar__logo" width={44} height={20} label="Re/cap" />
-  <span class="announce-bar__text" set:html={recap.announce.textHtml} />
-</a>
-
 <nav class="nav">
-  <a class="nav-logo" href={homeHref}>
-    <img src={logoSrc} alt="Shift+R" style="height:36px;width:36px;border-radius:8px;display:block;" />
-  </a>
+  <div class="nav-left">
+    <a class="nav-logo" href={homeHref}>
+      <img src={logoSrc} alt="Shift+R" style="height:36px;width:36px;border-radius:8px;display:block;" />
+    </a>
+
+    {sessions.length > 1 && (
+      <div class="session-switcher" aria-label="Sesiones Re/cap">
+        {sessions.map((s) =>
+          s.upcoming ? (
+            <span class="session-tab upcoming" title="Próximamente">
+              <span class="session-tab__dot" />
+              {String(s.number).padStart(2, '0')}
+            </span>
+          ) : (
+            <a
+              href={s.href}
+              class:list={['session-tab', { active: s.active }]}
+              aria-current={s.active ? 'page' : undefined}
+              style={`--tab-accent:${s.accent}`}
+            >
+              <span class="session-tab__dot" />
+              {String(s.number).padStart(2, '0')}
+            </a>
+          )
+        )}
+      </div>
+    )}
+  </div>
+
   <ul class="nav-links">
     <li><a href="#signals">Señales</a></li>
     <li><a href="#tensions">Tensiones</a></li>
@@ -49,9 +83,16 @@ const badgeClass = {
 </nav>
 
 <div class="hero">
-  <div class="hero-label">
-    <RecapLogo class="recap-logo-anim" width={36} height={16} animated />
-    {recap.heroLabel}
+  <div class="hero-top-row">
+    {recap.cover && (
+      <div class="hero-detail">
+        <img src={withBase(`images/${recap.cover}`)} alt="" loading="lazy" />
+      </div>
+    )}
+    <div class="hero-label">
+      <RecapLogo class="recap-logo-anim" width={36} height={16} animated />
+      {recap.heroLabel}
+    </div>
   </div>
   <h1>{recap.headline}<br /><em set:html={recap.headlineEm} /></h1>
   <p class="hero-sub" set:html={recap.subtitleHtml} />
@@ -309,6 +350,7 @@ const badgeClass = {
             labels: recap.charts.radar.labels,
             data: recap.charts.radar.data,
           },
+          accent: recap.accent,
         })}
       />
       <script>
@@ -316,12 +358,20 @@ const badgeClass = {
 
         const raw = document.getElementById('chart-data')?.textContent;
         if (!raw) throw new Error('Missing chart data');
-        const { temas, radar } = JSON.parse(raw);
+        const { temas, radar, accent } = JSON.parse(raw);
 
         const body = '#5a5852';
         const muted = '#807d72';
         const grid = '#e6e5e0';
-        const orange = '#ffdd00';
+        const orange = accent || '#ffdd00';
+
+        function hexToRgba(hex: string, alpha: number) {
+          const m = hex.replace('#', '');
+          const r = parseInt(m.substring(0, 2), 16);
+          const g = parseInt(m.substring(2, 4), 16);
+          const b = parseInt(m.substring(4, 6), 16);
+          return `rgba(${r},${g},${b},${alpha})`;
+        }
 
         new Chart(document.getElementById('temaChart'), {
           type: 'bar',
@@ -371,7 +421,7 @@ const badgeClass = {
             datasets: [
               {
                 data: radar.data,
-                backgroundColor: 'rgba(255,221,0,0.12)',
+                backgroundColor: hexToRgba(orange, 0.12),
                 borderColor: orange,
                 borderWidth: 1.5,
                 pointBackgroundColor: orange,

@@ -3,6 +3,9 @@ import type { Recap } from './types';
 export const recap01: Recap = {
   slug: '1',
   number: 1,
+  accent: '#ffdd00',
+  accentActive: '#e6c700',
+  cover: 'recap-01-cover.png',
   title: 'Recap [1] — Research Report · Shift+R',
   pageTitle: 'Recap [1] — Research Report · Shift+R',
   heroLabel: '[1] — Research',
@@ -10,16 +13,14 @@ export const recap01: Recap = {
   headlineEm: 'la aceleración de la IA',
   subtitleHtml:
     'Una conversación dentro de la comunidad <a class="brand-link" href="https://shiftr.pro" target="_blank" rel="noopener">Shift+R</a>. Análisis cualitativo de tensiones, emociones y necesidades emergentes ante el cambio de paradigma profesional.',
+  teaser:
+    'Saturación, FOMO y la búsqueda de un criterio propio frente a la aceleración de la IA en el diseño.',
   meta: [
     { label: 'Fecha', value: '31 Mar 2026' },
     { label: 'Duración', value: '~2 horas' },
     { label: 'Participantes', value: '~50 diseñadores' },
     { label: 'Método', value: 'Debate cualitativo' },
   ],
-  announce: {
-    href: '2/',
-    textHtml: '[2] · <strong>11 de mayo</strong>',
-  },
   navCta: 'Ver conclusiones',
   ideHeader: '// estado_emocional · recap_01 · 31.03.2026',
   ideSignals: [
