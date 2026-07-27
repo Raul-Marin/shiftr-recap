@@ -295,19 +295,33 @@ const badgeClass = {
 
 {
   hasCharts && (
-    <script
-      define:vars={{
-        temas: recap.charts.temas,
-        radar: recap.charts.radar,
-      }}
-    >
-      const body = '#5a5852';
-      const muted = '#807d72';
-      const grid = '#e6e5e0';
-      const orange = '#ffdd00';
+    <>
+      <script
+        id="chart-data"
+        type="application/json"
+        set:html={JSON.stringify({
+          temas: {
+            labels: recap.charts.temas.labels,
+            data: recap.charts.temas.data,
+            colors: recap.charts.temas.colors,
+          },
+          radar: {
+            labels: recap.charts.radar.labels,
+            data: recap.charts.radar.data,
+          },
+        })}
+      />
+      <script>
+        import { Chart } from 'chart.js/auto';
 
-      async function boot() {
-        const { Chart } = await import('chart.js/auto');
+        const raw = document.getElementById('chart-data')?.textContent;
+        if (!raw) throw new Error('Missing chart data');
+        const { temas, radar } = JSON.parse(raw);
+
+        const body = '#5a5852';
+        const muted = '#807d72';
+        const grid = '#e6e5e0';
+        const orange = '#ffdd00';
 
         new Chart(document.getElementById('temaChart'), {
           type: 'bar',
@@ -386,9 +400,7 @@ const badgeClass = {
             },
           },
         });
-      }
-
-      boot();
-    </script>
+      </script>
+    </>
   )
 }
