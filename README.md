@@ -1,36 +1,57 @@
-# Recap #1 — Research Report · Shift+R
+# Recap — Research Report · Shift+R
 
-Página web del primer Recap de investigación de la comunidad [Shift+R](https://shiftr.pro). Análisis cualitativo de tensiones, emociones y necesidades emergentes del grupo ante la aceleración de la IA.
+Informes de research de la comunidad [Shift+R](https://shiftr.pro). Misma estructura visual; cada sesión es un archivo de datos.
 
-**Live →** [raul-marin.github.io/shiftr-recap-1](https://raul-marin.github.io/shiftr-recap-1/)
+**Live →** [raul-marin.github.io/shiftr-recap-1](https://raul-marin.github.io/shiftr-recap-1/)  
+**Sesión 2 →** [/2/](https://raul-marin.github.io/shiftr-recap-1/2/) (stub hasta tener el contenido)
 
 ---
 
-## Sobre el contenido
-
-Sesión celebrada el **31 de marzo de 2026** con ~50 diseñadores de la comunidad. El informe recoge:
-
-- Señales emocionales y profesionales detectadas en sesión
-- Mapa de carga emocional por temas
-- Tensiones identificadas (6 pares de conceptos en conflicto)
-- Verbatims literales del grupo
-- Hallazgos clave accionables
-- Recomendaciones para diseñadores, comunidad y contenido educativo
-
-## Estructura del proyecto
-
-```
-├── index.html          # Estructura HTML
-└── recap-research-cursor.css   # Estilos separados
-```
-
 ## Stack
 
-- HTML + CSS puros, sin frameworks
-- Tipografías: **Gooper SemiBold** + **GT Walsheim** (vía framerusercontent.com)
-- Gráficas: [Chart.js](https://www.chartjs.org/) 4.4.1
-- Desplegado en **GitHub Pages** desde rama `main`
+- [Astro](https://astro.build) (estático) + CSS propio
+- Tipografías: **Gooper SemiBold** + **GT Walsheim**
+- Gráficas: Chart.js (solo cliente, en páginas con datos)
+- Deploy: GitHub Pages via Actions
 
-## Comunidad
+## Desarrollo
 
-[shiftr.pro](https://shiftr.pro) — escuela viva de diseño digital en español.
+```bash
+npm install
+npm run dev
+```
+
+Abrir la URL que imprime Astro (con base `/shiftr-recap-1`).
+
+```bash
+npm run build    # → dist/
+npm run preview
+```
+
+## Estructura
+
+```
+src/
+  data/
+    types.ts        # contrato compartido entre sesiones
+    recap-01.ts     # contenido sesión 1
+    recap-02.ts     # contenido sesión 2 (rellenar)
+  components/
+    RecapPage.astro # plantilla única (diseño)
+    RecapLogo.astro
+  pages/
+    index.astro     # → Recap [1]
+    2/index.astro   # → Recap [2]
+  styles/global.css
+public/
+  favicon.png
+  logo.jpg
+```
+
+## Añadir / completar la sesión 2
+
+1. Edita `src/data/recap-02.ts` con el mismo shape que `recap-01.ts`.
+2. Pon `published: true` cuando esté listo.
+3. El diseño no cambia: `RecapPage` reutiliza la misma plantilla.
+
+Cuando tengas el informe de la sesión del **11 de mayo**, pásalo y lo volcamos al archivo de datos.

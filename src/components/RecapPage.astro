@@ -1,0 +1,394 @@
+---
+import type { Recap } from '../data/types';
+import { withBase } from '../lib/paths';
+import RecapLogo from './RecapLogo.astro';
+
+interface Props {
+  recap: Recap;
+}
+
+const { recap } = Astro.props;
+
+function resolveHref(href: string) {
+  if (/^https?:\/\//.test(href)) return href;
+  return withBase(href === './' ? '' : href);
+}
+
+const announceHref = resolveHref(recap.announce.href);
+const homeHref = withBase();
+const logoSrc = withBase('logo.jpg');
+const hasCharts = recap.charts.temas.data.length > 0;
+const kpiRows = [recap.kpis.slice(0, 4), recap.kpis.slice(4, 8)].filter((r) => r.length);
+const valClass = { high: 'val-high', mid: 'val-mid', low: 'val-low' } as const;
+const badgeClass = {
+  critical: 'badge-critical',
+  high: 'badge-high',
+  low: 'badge-low',
+  minimal: 'badge-minimal',
+} as const;
+---
+
+<a class="announce-bar" href={announceHref} rel="noopener">
+  <span class="announce-bar__dot"></span>
+  <RecapLogo class="announce-bar__logo" width={44} height={20} label="Re/cap" />
+  <span class="announce-bar__text" set:html={recap.announce.textHtml} />
+</a>
+
+<nav class="nav">
+  <a class="nav-logo" href={homeHref}>
+    <img src={logoSrc} alt="Shift+R" style="height:36px;width:36px;border-radius:8px;display:block;" />
+  </a>
+  <ul class="nav-links">
+    <li><a href="#signals">Señales</a></li>
+    <li><a href="#tensions">Tensiones</a></li>
+    <li><a href="#voices">Voces</a></li>
+    <li><a href="#insights">Hallazgos</a></li>
+    <li><a href="#recs">Próximos pasos</a></li>
+  </ul>
+  <a class="nav-cta" href="#recs">{recap.navCta}</a>
+</nav>
+
+<div class="hero">
+  <div class="hero-label">
+    <RecapLogo class="recap-logo-anim" width={36} height={16} animated />
+    {recap.heroLabel}
+  </div>
+  <h1>{recap.headline}<br /><em set:html={recap.headlineEm} /></h1>
+  <p class="hero-sub" set:html={recap.subtitleHtml} />
+  <div class="hero-meta">
+    {recap.meta.map((item) => (
+      <div class="hero-meta-item">
+        <span class="hero-meta-label">{item.label}</span>
+        <span class="hero-meta-value">{item.value}</span>
+      </div>
+    ))}
+  </div>
+</div>
+
+<hr class="section-divider" />
+
+{
+  (recap.ideSignals.length > 0 || recap.kpis.length > 0) && (
+    <div class="section" id="signals">
+      <div class="section-label">01 — Señales de la sesión</div>
+      <h2 class="section-title">El estado del grupo</h2>
+      <p class="section-desc">
+        Intensidad de señales emocionales y profesionales detectadas. Escala 1–5 según frecuencia e intensidad de
+        mención en sesión.
+      </p>
+
+      {recap.ideSignals.length > 0 && (
+        <div class="ide-block">
+          <span class="comment">{recap.ideHeader}</span>
+          <br /><br />
+          {recap.ideSignals.map((s) => (
+            <>
+              <span class="key">{s.key.padEnd(18, ' ')}</span>
+              {' = '}
+              <span class={valClass[s.level]}>{s.value}</span>
+              {'  '}
+              <span class="comment">{s.comment}</span>
+              <br />
+            </>
+          ))}
+        </div>
+      )}
+
+      {kpiRows.map((row) => (
+        <div class="kpi-grid">
+          {row.map((kpi) => (
+            <div class:list={['kpi-card', { dark: !!kpi.dark }]}>
+              <span class="kpi-label">{kpi.label}</span>
+              <div class="kpi-value">
+                {kpi.value}<sup>/5</sup>
+              </div>
+              <div class="kpi-note">{kpi.note}</div>
+              {kpi.badge && (
+                <span class:list={['badge', badgeClass[kpi.badge.tone]]}>{kpi.badge.text}</span>
+              )}
+            </div>
+          ))}
+        </div>
+      ))}
+
+      {hasCharts && (
+        <div class="charts-row">
+          <div class="chart-card">
+            <div class="chart-title">Frecuencia de temas — menciones relativas</div>
+            <div class="chart-wrap" style="height:260px;">
+              <canvas
+                id="temaChart"
+                role="img"
+                aria-label="Frecuencia de temas en la sesión"
+                data-chart="temas"
+              >
+                {recap.charts.temas.fallback}
+              </canvas>
+            </div>
+          </div>
+          <div class="chart-card">
+            <div class="chart-title">Necesidades detectadas — prioridad percibida</div>
+            <div class="chart-wrap" style="height:260px;">
+              <canvas
+                id="radarChart"
+                role="img"
+                aria-label="Radar de necesidades del grupo"
+                data-chart="radar"
+              >
+                {recap.charts.radar.fallback}
+              </canvas>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  )
+}
+
+{
+  recap.heatmap.length > 0 && (
+    <>
+      <hr class="section-divider" />
+      <div class="section">
+        <div class="section-label">02 — Mapa de carga emocional</div>
+        <h2 class="section-title">¿Qué está en tensión?</h2>
+        <p class="section-desc">
+          Cada celda es un tema emergente de la sesión. El color indica la carga emocional detectada en el discurso.
+        </p>
+
+        <div class="timeline-row">
+          <span class="tl-pill tl-thinking">Crítica</span>
+          <span class="tl-pill tl-thinking" style="opacity:.7">Alta</span>
+          <span class="tl-pill tl-done">Media</span>
+          <span class="tl-pill tl-grep">Baja</span>
+          <span class="tl-pill" style="background:var(--surface-strong);color:var(--muted)">Neutra</span>
+        </div>
+
+        <div class="heatmap-grid">
+          {recap.heatmap.map((cell) => (
+            <div class={`hm-cell hm-${cell.level}`}>
+              <span>{cell.label}</span>
+            </div>
+          ))}
+        </div>
+        <div class="hm-legend">
+          <span class="hm-dot" style="background:#c43010"></span> Crítica &nbsp;
+          <span class="hm-dot" style="background:var(--tl-thinking)"></span> Alta &nbsp;
+          <span class="hm-dot" style="background:var(--tl-done)"></span> Media &nbsp;
+          <span class="hm-dot" style="background:var(--tl-grep)"></span> Baja &nbsp;
+          <span class="hm-dot" style="background:var(--surface-strong)"></span> Neutra
+        </div>
+      </div>
+    </>
+  )
+}
+
+{
+  recap.tensions.length > 0 && (
+    <>
+      <hr class="section-divider" />
+      <div class="section" id="tensions">
+        <div class="section-label">03 — Tensiones identificadas</div>
+        <h2 class="section-title">Las seis contradicciones del momento</h2>
+        <p class="section-desc">
+          Pares de conceptos en conflicto que emergieron con mayor fuerza y frecuencia durante el debate.
+        </p>
+
+        <div class="tension-grid">
+          {recap.tensions.map((t) => (
+            <div class="tension-card">
+              <div class="tension-pill">
+                <span class={`tl-pill tl-${t.level}`}>{t.levelLabel}</span>
+              </div>
+              <div class="tension-vs">
+                <span class="tension-term">{t.left}</span>
+                <span class="tension-sep">vs</span>
+                <span class="tension-term">{t.right}</span>
+              </div>
+              <p class="tension-desc">{t.desc}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </>
+  )
+}
+
+{
+  recap.verbatims.length > 0 && (
+    <>
+      <hr class="section-divider" />
+      <div class="section" id="voices">
+        <div class="section-label">04 — Verbatim</div>
+        <h2 class="section-title">Lo que se dijo en sesión</h2>
+        <p class="section-desc">
+          Frases literales que condensan el clima emocional y profesional. Los nombres han sido anonimizados.
+        </p>
+
+        <div class="verbatim-list">
+          {recap.verbatims.map((v) => (
+            <div class="verbatim-item">
+              <div class="verbatim-text">{v.text}</div>
+              <div class="verbatim-tag">
+                <span class={`tl-pill tl-${v.tone}`}>{v.tag}</span>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </>
+  )
+}
+
+{
+  recap.insights.length > 0 && (
+    <>
+      <hr class="section-divider" />
+      <div class="section" id="insights">
+        <div class="section-label">05 — Hallazgos clave</div>
+        <h2 class="section-title">Qué aprendimos</h2>
+        <p class="section-desc">Seis hallazgos accionables que emergen del análisis cualitativo de la sesión.</p>
+
+        <div class="insight-grid">
+          {recap.insights.map((insight) => (
+            <div class="insight-card">
+              <div class="insight-num">{insight.num}</div>
+              <div class="insight-title">{insight.title}</div>
+              <p class="insight-body">{insight.body}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </>
+  )
+}
+
+<div class="cta-band" id="recs">
+  <h2>
+    {recap.cta.title}
+    <em set:html={`<br>${recap.cta.titleEm}`} />
+  </h2>
+  <p>{recap.cta.body}</p>
+
+  {recap.cta.recs.length > 0 && (
+    <div class="recs-grid">
+      {recap.cta.recs.map((rec) => (
+        <div class="rec-card">
+          <span class="rec-label">{rec.label}</span>
+          <p class="rec-text">{rec.text}</p>
+        </div>
+      ))}
+    </div>
+  )}
+</div>
+
+<footer>
+  <span class="footer-logo">
+    <img
+      src={logoSrc}
+      alt="Shift+R"
+      style="height:32px;width:32px;border-radius:6px;display:inline-block;vertical-align:middle;"
+    />
+  </span>
+  <span class="footer-meta">{recap.footerMeta}</span>
+</footer>
+
+{
+  hasCharts && (
+    <script
+      define:vars={{
+        temas: recap.charts.temas,
+        radar: recap.charts.radar,
+      }}
+    >
+      const body = '#5a5852';
+      const muted = '#807d72';
+      const grid = '#e6e5e0';
+      const orange = '#ffdd00';
+
+      async function boot() {
+        const { Chart } = await import('chart.js/auto');
+
+        new Chart(document.getElementById('temaChart'), {
+          type: 'bar',
+          data: {
+            labels: temas.labels,
+            datasets: [
+              {
+                data: temas.data,
+                backgroundColor: temas.colors,
+                borderWidth: 0,
+                borderRadius: 4,
+              },
+            ],
+          },
+          options: {
+            indexAxis: 'y',
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: { display: false },
+              tooltip: { callbacks: { label: (ctx) => ` ${ctx.raw}%` } },
+            },
+            scales: {
+              x: {
+                max: 100,
+                ticks: {
+                  color: muted,
+                  font: { size: 11, family: 'Inter' },
+                  callback: (v) => v + '%',
+                },
+                grid: { color: grid },
+                border: { display: false },
+              },
+              y: {
+                ticks: { color: body, font: { size: 11, family: 'Inter' } },
+                grid: { display: false },
+                border: { display: false },
+              },
+            },
+          },
+        });
+
+        new Chart(document.getElementById('radarChart'), {
+          type: 'radar',
+          data: {
+            labels: radar.labels,
+            datasets: [
+              {
+                data: radar.data,
+                backgroundColor: 'rgba(255,221,0,0.12)',
+                borderColor: orange,
+                borderWidth: 1.5,
+                pointBackgroundColor: orange,
+                pointRadius: 3,
+              },
+            ],
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { display: false } },
+            scales: {
+              r: {
+                min: 0,
+                max: 5,
+                ticks: {
+                  stepSize: 1,
+                  color: muted,
+                  font: { size: 10, family: 'Inter' },
+                  backdropColor: 'transparent',
+                },
+                grid: { color: grid },
+                angleLines: { color: grid },
+                pointLabels: { color: body, font: { size: 11, family: 'Inter' } },
+              },
+            },
+          },
+        });
+      }
+
+      boot();
+    </script>
+  )
+}

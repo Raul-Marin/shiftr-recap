@@ -599,7 +599,8 @@ body {
   margin-bottom: 48px;
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
-  word-break: break-word;
+  white-space: pre;
+  word-break: normal;
 }
 .ide-block .comment { color: var(--muted-soft); }
 .ide-block .key     { color: var(--ink); font-weight: 500; }
