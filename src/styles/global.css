@@ -1034,10 +1034,9 @@ footer {
   .kpi-grid { grid-template-columns: 1fr; }
   .kpi-value { font-size: 40px; }
   .heatmap-grid { grid-template-columns: repeat(2, 1fr); }
-  .hero-meta { display: grid; grid-template-columns: 1fr 1fr; width: 100%; max-width: 100%; }
+  .hero-meta { display: grid; grid-template-columns: 1fr; width: 100%; max-width: 100%; }
   .hero-meta-item { border-right: none; border-bottom: 1px solid var(--hairline); padding: 14px 16px; }
-  .hero-meta-item:nth-child(odd) { border-right: 1px solid var(--hairline); }
-  .hero-meta-item:nth-last-child(-n+2) { border-bottom: none; }
+  .hero-meta-item:last-child { border-bottom: none; }
   .verbatim-text { font-size: 17px; }
   .ide-block { overflow-x: auto; -webkit-overflow-scrolling: touch; }
   .cta-band { padding: 56px 16px; }
