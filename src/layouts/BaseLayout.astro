@@ -28,5 +28,29 @@ const accentStyle = accent
   </head>
   <body style={accentStyle}>
     <slot />
+    <script>
+      const REVEAL_SELECTOR =
+        '.hero, .hero-meta, .section, .kpi-card, .chart-card, .tension-card, .insight-card, .rec-card, .verbatim-item, .heatmap-grid, .cta-band, .session-card, .upcoming-badge, .session-switcher';
+
+      const els = Array.from(document.querySelectorAll<HTMLElement>(REVEAL_SELECTOR));
+
+      if (els.length && 'IntersectionObserver' in window) {
+        els.forEach((el) => el.classList.add('reveal'));
+
+        const observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add('reveal-visible');
+                observer.unobserve(entry.target);
+              }
+            });
+          },
+          { threshold: 0.12, rootMargin: '0px 0px -6% 0px' }
+        );
+
+        els.forEach((el) => observer.observe(el));
+      }
+    </script>
   </body>
 </html>
