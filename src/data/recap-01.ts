@@ -6,9 +6,9 @@ export const recap01: Recap = {
   accent: '#ffdd00',
   accentActive: '#e6c700',
   cover: 'recap-01-cover.png',
-  title: 'Recap [1] — Research Report · Shift+R',
-  pageTitle: 'Recap [1] — Research Report · Shift+R',
-  heroLabel: '[1] — Research',
+  title: 'Recap [1] · Research Report · Shift+R',
+  pageTitle: 'Recap [1] · Research Report · Shift+R',
+  heroLabel: '[1] Research',
   headline: 'Así vivimos',
   headlineEm: 'la aceleración de la IA',
   subtitleHtml:
@@ -146,7 +146,7 @@ export const recap01: Recap = {
       levelLabel: 'Alta tensión',
       left: 'Creatividad',
       right: 'Productividad',
-      desc: 'El mercado parece premiar velocidad sobre sensibilidad. El diseñador siente que sus valores diferenciales — "criterio", fricción, preguntas — están siendo devaluados frente a la ejecución rápida.',
+      desc: 'El mercado parece premiar velocidad sobre sensibilidad. El diseñador siente que sus valores diferenciales, como el "criterio", la fricción o las preguntas, están siendo devaluados frente a la ejecución rápida.',
     },
     {
       level: 'edit',

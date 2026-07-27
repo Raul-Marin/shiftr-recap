@@ -106,7 +106,7 @@ export interface Recap {
   published: boolean;
 }
 
-/** A session that's announced but not yet published — shown as "coming soon" on the home page. */
+/** A session that's announced but not yet published (shown as "coming soon" on the home page). */
 export interface UpcomingSession {
   number: number;
   date: string;

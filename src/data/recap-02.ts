@@ -6,9 +6,9 @@ export const recap02: Recap = {
   accent: '#4dd8c4',
   accentActive: '#31b8a5',
   cover: 'recap-02-cover.png',
-  title: 'Recap [2] — Research Report · Shift+R',
-  pageTitle: 'Recap [2] — Research Report · Shift+R',
-  heroLabel: '[2] — Research',
+  title: 'Recap [2] · Research Report · Shift+R',
+  pageTitle: 'Recap [2] · Research Report · Shift+R',
+  heroLabel: '[2] Research',
   headline: 'El oficio se difumina',
   headlineEm: 'y hay que defenderlo cada día',
   subtitleHtml:
