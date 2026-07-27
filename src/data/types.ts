@@ -110,5 +110,7 @@ export interface Recap {
 export interface UpcomingSession {
   number: number;
   date: string;
+  /** ISO date (YYYY-MM-DD) of the session, used to know when the "live" badge should turn off. */
+  dateISO: string;
   note?: string;
 }

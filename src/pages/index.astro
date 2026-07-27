@@ -9,6 +9,7 @@ const homeHref = withBase();
 
 const publishedDesc = [...recaps].filter((r) => r.published).sort((a, b) => b.number - a.number);
 const nextUpcoming = [...upcomingSessions].sort((a, b) => a.number - b.number)[0];
+const isUpcomingLive = nextUpcoming ? new Date() <= new Date(`${nextUpcoming.dateISO}T23:59:59`) : false;
 
 const avatarFiles = ['avatar-1.png', 'avatar-2.png', 'avatar-3.png', 'avatar-4.png', 'avatar-5.png', 'avatar-6.png'];
 
@@ -50,7 +51,7 @@ function hexToRgba(hex: string, alpha: number) {
     {
       nextUpcoming && (
         <span class="upcoming-badge">
-          <span class="upcoming-badge__dot" />
+          <span class:list={['upcoming-badge__dot', { 'is-live': isUpcomingLive, 'is-off': !isUpcomingLive }]} />
           Próxima sesión · {nextUpcoming.date} · Recap [{String(nextUpcoming.number).padStart(2, '0')}]
         </span>
       )

@@ -780,6 +780,20 @@ body {
   background: var(--muted-soft);
   flex-shrink: 0;
 }
+.upcoming-badge__dot.is-live {
+  position: relative;
+  background: #2fbf5a;
+  box-shadow: 0 0 0 0 rgba(47,191,90,0.6);
+  animation: upcoming-dot-pulse 1.6s ease-out infinite;
+}
+.upcoming-badge__dot.is-off {
+  background: var(--hairline-strong);
+}
+@keyframes upcoming-dot-pulse {
+  0%   { box-shadow: 0 0 0 0 rgba(47,191,90,0.55); }
+  70%  { box-shadow: 0 0 0 6px rgba(47,191,90,0); }
+  100% { box-shadow: 0 0 0 0 rgba(47,191,90,0); }
+}
 
 /* ── SESSION GRID (home, primary) ── */
 .session-grid {
