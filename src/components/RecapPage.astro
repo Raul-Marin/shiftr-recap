@@ -77,11 +77,11 @@ const sessions = [
   </div>
 
   <ul class="nav-links">
-    <li><a href="#signals">Señales</a></li>
-    <li><a href="#tensions">Tensiones</a></li>
-    <li><a href="#voices">Voces</a></li>
-    <li><a href="#insights">Hallazgos</a></li>
-    <li><a href="#recs">Próximos pasos</a></li>
+    <li><a href="#signals"><span class="nav-links__num">01</span>Señales</a></li>
+    <li><a href="#tensions"><span class="nav-links__num">03</span>Tensiones</a></li>
+    <li><a href="#voices"><span class="nav-links__num">04</span>Voces</a></li>
+    <li><a href="#insights"><span class="nav-links__num">05</span>Hallazgos</a></li>
+    <li><a href="#recs"><span class="nav-links__num">06</span>Próximos pasos</a></li>
   </ul>
   <a class="nav-cta" href="#recs">{recap.navCta}</a>
 </nav>
@@ -472,3 +472,31 @@ const sessions = [
     </>
   )
 }
+
+<script>
+  const links = Array.from(document.querySelectorAll<HTMLAnchorElement>('.nav-links a'));
+  const targets = links
+    .map((link) => {
+      const id = link.getAttribute('href')?.slice(1);
+      const el = id ? document.getElementById(id) : null;
+      return el ? { link, el } : null;
+    })
+    .filter((t): t is { link: HTMLAnchorElement; el: HTMLElement } => t !== null);
+
+  if (targets.length) {
+    const setActive = (id: string) => {
+      links.forEach((l) => l.classList.toggle('active', l.getAttribute('href') === `#${id}`));
+    };
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) setActive(entry.target.id);
+        });
+      },
+      { rootMargin: '-15% 0px -50% 0px', threshold: 0 }
+    );
+
+    targets.forEach(({ el }) => observer.observe(el));
+  }
+</script>
