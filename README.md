@@ -2,9 +2,9 @@
 
 Informes de research de la comunidad [Shift+R](https://shiftr.pro). Misma estructura visual; cada sesión es un archivo de datos.
 
-**Home (índice de sesiones) →** [raul-marin.github.io/shiftr-recap-1](https://raul-marin.github.io/shiftr-recap-1/)
-**Sesión 1 →** [/1/](https://raul-marin.github.io/shiftr-recap-1/1/)
-**Sesión 2 →** [/2/](https://raul-marin.github.io/shiftr-recap-1/2/)
+**Home (índice de sesiones) →** [raul-marin.github.io/shiftr-recap](https://raul-marin.github.io/shiftr-recap/)
+**Sesión 1 →** [/1/](https://raul-marin.github.io/shiftr-recap/1/)
+**Sesión 2 →** [/2/](https://raul-marin.github.io/shiftr-recap/2/)
 
 ---
 
@@ -22,7 +22,7 @@ npm install
 npm run dev
 ```
 
-Abrir la URL que imprime Astro (con base `/shiftr-recap-1`).
+Abrir la URL que imprime Astro (con base `/shiftr-recap`).
 
 ```bash
 npm run build    # → dist/

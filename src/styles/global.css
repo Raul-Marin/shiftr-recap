@@ -322,6 +322,26 @@ body {
   font-weight: 500;
   color: var(--ink);
 }
+.hero-meta-people {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.hero-meta-avatars {
+  display: flex;
+  flex-shrink: 0;
+}
+.hero-meta-avatars img {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  object-fit: cover;
+  display: block;
+  background: #fff;
+  border: 1px solid var(--hairline-strong);
+  margin-left: -8px;
+}
+.hero-meta-avatars img:first-child { margin-left: 0; }
 
 /* ── SECTION WRAPPER ── */
 .section {

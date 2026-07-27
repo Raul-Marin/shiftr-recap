@@ -18,7 +18,7 @@ export const recap02: Recap = {
   meta: [
     { label: 'Fecha', value: '11 May 2026' },
     { label: 'Duración', value: '~2 horas' },
-    { label: 'Participantes', value: '~20 diseñadores' },
+    { label: 'Participantes', value: '+ de 20 diseñadores' },
     { label: 'Método', value: 'Debate cualitativo' },
   ],
   navCta: 'Ver conclusiones',
