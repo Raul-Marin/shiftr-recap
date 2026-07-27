@@ -13,6 +13,7 @@ const { recap } = Astro.props;
 const homeHref = withBase();
 const logoSrc = withBase('logo.jpg');
 const hasCharts = recap.charts.temas.data.length > 0;
+const hasHeatmap = recap.heatmap.length > 0;
 const kpiRows = [recap.kpis.slice(0, 4), recap.kpis.slice(4, 8)].filter((r) => r.length);
 const valClass = { high: 'val-high', mid: 'val-mid', low: 'val-low' } as const;
 const badgeClass = {
@@ -77,11 +78,14 @@ const sessions = [
   </div>
 
   <ul class="nav-links">
-    <li><a href="#signals"><span class="nav-links__num">01</span>Señales</a></li>
-    <li><a href="#tensions"><span class="nav-links__num">03</span>Tensiones</a></li>
-    <li><a href="#voices"><span class="nav-links__num">04</span>Voces</a></li>
-    <li><a href="#insights"><span class="nav-links__num">05</span>Hallazgos</a></li>
-    <li><a href="#recs"><span class="nav-links__num">06</span>Próximos pasos</a></li>
+    <li><a href="#signals"><span class="nav-links__num">01</span><span class="nav-links__label">Señales</span></a></li>
+    {hasHeatmap && (
+      <li><a href="#emotions"><span class="nav-links__num">02</span><span class="nav-links__label">Carga emocional</span></a></li>
+    )}
+    <li><a href="#tensions"><span class="nav-links__num">03</span><span class="nav-links__label">Tensiones</span></a></li>
+    <li><a href="#voices"><span class="nav-links__num">04</span><span class="nav-links__label">Voces</span></a></li>
+    <li><a href="#insights"><span class="nav-links__num">05</span><span class="nav-links__label">Hallazgos</span></a></li>
+    <li><a href="#recs"><span class="nav-links__num">06</span><span class="nav-links__label">Próximos pasos</span></a></li>
   </ul>
   <a class="nav-cta" href="#recs">{recap.navCta}</a>
 </nav>
@@ -208,7 +212,7 @@ const sessions = [
   recap.heatmap.length > 0 && (
     <>
       <hr class="section-divider" />
-      <div class="section">
+      <div class="section" id="emotions">
         <div class="section-label">02 · Mapa de carga emocional</div>
         <h2 class="section-title">¿Qué está en tensión?</h2>
         <p class="section-desc">
