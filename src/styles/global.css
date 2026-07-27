@@ -328,6 +328,7 @@ body {
 .hero-meta-item {
   padding: 16px 28px;
   border-right: 1px solid var(--hairline);
+  min-width: 0;
 }
 .hero-meta-item:last-child { border-right: none; }
 .hero-meta-label {
@@ -343,11 +344,15 @@ body {
   font-size: 15px;
   font-weight: 500;
   color: var(--ink);
+  min-width: 0;
+  overflow-wrap: break-word;
 }
 .hero-meta-people {
   display: flex;
   align-items: center;
-  gap: 8px;
+  flex-wrap: wrap;
+  gap: 4px 8px;
+  min-width: 0;
 }
 .hero-meta-avatars {
   display: flex;
