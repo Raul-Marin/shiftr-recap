@@ -48,6 +48,18 @@ public/
   logo.jpg
 ```
 
+## Deploy (GitHub Pages)
+
+El build estático se publica en `docs/` (rama `main`). Pages apunta a **main → /docs**.
+
+```bash
+npm run build
+rm -rf docs && mkdir docs && cp -R dist/. docs/ && touch docs/.nojekyll
+```
+
+Luego commit + push de `docs/`.
+
+
 ## Añadir / completar la sesión 2
 
 1. Edita `src/data/recap-02.ts` con el mismo shape que `recap-01.ts`.
