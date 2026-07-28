@@ -195,11 +195,33 @@ body {
   transition: color .15s;
 }
 .brand-link:hover { color: var(--ink); }
+/* ── SECTION NAV (floating sticky pill, second level) ── */
+.section-nav {
+  position: sticky;
+  top: 64px;
+  z-index: 90;
+  display: flex;
+  justify-content: center;
+  padding: 16px 20px 0;
+  pointer-events: none;
+}
 .nav-links {
   display: flex;
-  gap: 28px;
+  align-items: center;
+  gap: 2px;
   list-style: none;
+  pointer-events: auto;
+  background: var(--surface-card);
+  border: 1px solid var(--hairline);
+  border-radius: 9999px;
+  padding: 5px;
+  box-shadow: 0 10px 30px rgba(38,37,30,0.12);
+  max-width: 100%;
+  overflow-x: auto;
+  scrollbar-width: none;
 }
+.nav-links::-webkit-scrollbar { display: none; }
+.nav-links li { flex-shrink: 0; }
 .nav-links a {
   display: inline-flex;
   align-items: center;
@@ -210,9 +232,11 @@ body {
   color: var(--body);
   text-decoration: none;
   white-space: nowrap;
-  transition: color .15s;
+  padding: 9px 16px;
+  border-radius: 9999px;
+  transition: color .15s, background .15s;
 }
-.nav-links a:hover { color: var(--ink); }
+.nav-links a:hover { color: var(--ink); background: var(--surface-strong); }
 .nav-links__num {
   font-size: 11px;
   font-weight: 600;
@@ -565,6 +589,7 @@ body {
   padding: 80px 48px;
   max-width: 1200px;
   margin: 0 auto;
+  scroll-margin-top: 128px;
 }
 .section-divider {
   border: none;
@@ -904,6 +929,7 @@ body {
   background: var(--ink);
   padding: 96px 48px;
   text-align: center;
+  scroll-margin-top: 128px;
 }
 .cta-band h2 {
   font-family: var(--font-display);
@@ -1183,9 +1209,6 @@ footer {
   .charts-row, .tension-grid, .insight-grid, .recs-grid, .session-grid { grid-template-columns: 1fr; }
   .heatmap-grid { grid-template-columns: repeat(3,1fr); }
   .nav {
-    flex-wrap: wrap;
-    height: auto;
-    row-gap: 10px;
     padding: 12px 20px;
   }
   .nav-cta {
@@ -1196,18 +1219,8 @@ footer {
     border-radius: 9999px;
     box-shadow: 0 6px 20px rgba(0,0,0,0.22);
   }
-  .nav-links {
-    order: 3;
-    flex-basis: 100%;
-    width: 100%;
-    gap: 20px;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-  }
-  .nav-links::-webkit-scrollbar { display: none; }
-  .nav-links li { flex-shrink: 0; }
-  .nav-links a { white-space: nowrap; font-size: 13px; }
+  .section-nav { padding: 10px 16px 0; }
+  .nav-links a { font-size: 13px; padding: 8px 13px; }
   .hero, .section { padding-left: 20px; padding-right: 20px; }
   .verbatim-item { grid-template-columns: 1fr; gap: 12px; }
   footer { flex-direction: column; gap: 12px; text-align: center; }
