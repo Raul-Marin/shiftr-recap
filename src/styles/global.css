@@ -394,14 +394,19 @@ body {
 }
 .hero-meta-avatars img:first-child { margin-left: 0; }
 
-/* ── HERO RESOURCES (audio / notebook / infographic) ── */
-.resources-wrap {
-  max-width: 1200px;
-  margin: 0 auto 64px;
-  padding: 0 48px;
+/* ── HERO INFO GROUP (meta card + resources card, matched width) ── */
+.hero-info {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 18px;
+  max-width: 100%;
 }
+
+/* ── HERO RESOURCES (audio / notebook / infographic) ── */
 .resources-card {
   position: relative;
+  max-width: 680px;
   border-radius: 16px;
   border: 1px solid var(--hairline-strong);
   background: linear-gradient(155deg, var(--card-tint, var(--surface-strong)), var(--surface-card) 60%);
@@ -520,8 +525,8 @@ body {
   transform: translateY(-1px);
 }
 @media (max-width: 768px) {
-  .resources-wrap { padding: 0 20px; }
-  .resources-card { padding: 20px 20px 22px; }
+  .hero-info { width: 100%; }
+  .resources-card { max-width: 100%; padding: 20px 20px 22px; }
   .resource-audio { flex-direction: column; align-items: stretch; }
   .resource-audio__label { align-self: flex-start; }
   .resource-audio audio { max-width: 100%; }
@@ -529,7 +534,6 @@ body {
   .resource-link { flex: 1 1 auto; justify-content: center; }
 }
 @media (max-width: 480px) {
-  .resources-wrap { padding: 0 16px; }
   .resources-card { padding: 18px 16px 20px; }
 }
 
@@ -1197,6 +1201,7 @@ footer {
   .kpi-grid { grid-template-columns: 1fr; }
   .kpi-value { font-size: 40px; }
   .heatmap-grid { grid-template-columns: repeat(2, 1fr); }
+  .hero-info { width: 100%; }
   .hero-meta { display: grid; grid-template-columns: 1fr; width: 100%; max-width: 100%; }
   .hero-meta-item { border-right: none; border-bottom: 1px solid var(--hairline); padding: 14px 16px; }
   .hero-meta-item:last-child { border-bottom: none; }

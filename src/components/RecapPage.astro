@@ -112,33 +112,31 @@ const sessions = [
   </div>
   <h1>{recap.headline}<br /><em set:html={recap.headlineEm} /></h1>
   <p class="hero-sub" set:html={recap.subtitleHtml} />
-  <div class="hero-meta">
-    {recap.meta.map((item) =>
-      item.label === 'Participantes' ? (
-        <div class="hero-meta-item">
-          <span class="hero-meta-label">{item.label}</span>
-          <div class="hero-meta-people">
-            <div class="hero-meta-avatars">
-              {peopleAvatars.map((a) => (
-                <img src={withBase(`images/avatars/${a}`)} alt="" loading="lazy" />
-              ))}
+  <div class="hero-info">
+    <div class="hero-meta">
+      {recap.meta.map((item) =>
+        item.label === 'Participantes' ? (
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">{item.label}</span>
+            <div class="hero-meta-people">
+              <div class="hero-meta-avatars">
+                {peopleAvatars.map((a) => (
+                  <img src={withBase(`images/avatars/${a}`)} alt="" loading="lazy" />
+                ))}
+              </div>
+              <span class="hero-meta-value">{item.value}</span>
             </div>
+          </div>
+        ) : (
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">{item.label}</span>
             <span class="hero-meta-value">{item.value}</span>
           </div>
-        </div>
-      ) : (
-        <div class="hero-meta-item">
-          <span class="hero-meta-label">{item.label}</span>
-          <span class="hero-meta-value">{item.value}</span>
-        </div>
-      )
-    )}
-  </div>
-</div>
+        )
+      )}
+    </div>
 
-{
-  recap.resources && (
-    <div class="resources-wrap">
+    {recap.resources && (
       <div
         class="resources-card"
         style={`--card-accent:${recap.accent};--card-tint:${hexToRgba(recap.accent, 0.14)}`}
@@ -196,9 +194,9 @@ const sessions = [
           )}
         </div>
       </div>
-    </div>
-  )
-}
+    )}
+  </div>
+</div>
 
 <hr class="section-divider" />
 
