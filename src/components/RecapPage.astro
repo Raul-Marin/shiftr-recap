@@ -565,11 +565,40 @@ const sessions = [
   const menu = document.getElementById('section-nav-menu');
   const toggle = document.querySelector<HTMLButtonElement>('.section-nav-toggle');
   const toggleLabel = toggle?.querySelector<HTMLElement>('.section-nav-toggle__label') ?? null;
+  const sectionNav = document.querySelector<HTMLElement>('.section-nav');
 
   const closeMenu = () => {
     menu?.classList.remove('is-open');
     toggle?.setAttribute('aria-expanded', 'false');
   };
+
+  if (sectionNav) {
+    const REVEAL_AFTER = 24;
+    let visible = false;
+    let ticking = false;
+
+    const applyVisibility = () => {
+      const shouldShow = window.scrollY > REVEAL_AFTER;
+      if (shouldShow !== visible) {
+        visible = shouldShow;
+        sectionNav.classList.toggle('is-visible', visible);
+        if (!visible) closeMenu();
+      }
+      ticking = false;
+    };
+
+    applyVisibility();
+    window.addEventListener(
+      'scroll',
+      () => {
+        if (!ticking) {
+          requestAnimationFrame(applyVisibility);
+          ticking = true;
+        }
+      },
+      { passive: true }
+    );
+  }
 
   if (toggle && menu) {
     toggle.addEventListener('click', () => {
