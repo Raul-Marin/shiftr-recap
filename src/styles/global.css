@@ -343,11 +343,6 @@ body {
 .hero-meta {
   display: flex;
   gap: 0;
-  border: 1px solid var(--hairline);
-  border-radius: 12px;
-  overflow: hidden;
-  background: var(--surface-card);
-  display: inline-flex;
 }
 .hero-meta-item {
   padding: 16px 28px;
@@ -394,32 +389,22 @@ body {
 }
 .hero-meta-avatars img:first-child { margin-left: 0; }
 
-/* ── HERO INFO GROUP (meta card + resources card, matched width) ── */
+/* ── HERO INFO GROUP: meta + resources merged into a single card ── */
 .hero-info {
   display: inline-flex;
   flex-direction: column;
   align-items: stretch;
-  gap: 18px;
   max-width: 100%;
+  border: 1px solid var(--hairline);
+  border-radius: 12px;
+  overflow: hidden;
+  background: var(--surface-card);
 }
 
 /* ── HERO RESOURCES (audio / notebook / infographic) ── */
 .resources-card {
-  position: relative;
-  max-width: 680px;
-  border-radius: 16px;
-  border: 1px solid var(--hairline-strong);
-  background: linear-gradient(155deg, var(--card-tint, var(--surface-strong)), var(--surface-card) 60%);
-  padding: 22px 28px 26px;
-  box-shadow: 0 12px 28px rgba(20,19,15,0.06);
-  overflow: hidden;
-}
-.resources-card::before {
-  content: '';
-  position: absolute;
-  inset: 0 0 auto 0;
-  height: 3px;
-  background: var(--card-accent, var(--primary));
+  padding: 20px 28px 24px;
+  border-top: 1px solid var(--hairline);
 }
 .resources-card__eyebrow {
   display: inline-flex;
@@ -431,18 +416,12 @@ body {
   letter-spacing: 0.04em;
   text-transform: uppercase;
   color: var(--muted);
-  background: var(--surface-card);
-  border: 1px solid var(--hairline);
-  padding: 5px 11px 5px 9px;
-  border-radius: 9999px;
-  margin-bottom: 18px;
+  margin-bottom: 16px;
 }
 .resources-card__grid {
   display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  gap: 18px 32px;
+  flex-direction: column;
+  gap: 16px;
 }
 .resource-audio {
   display: flex;
@@ -450,7 +429,6 @@ body {
   gap: 16px;
   flex-wrap: wrap;
   min-width: 0;
-  flex: 1 1 360px;
 }
 .resource-audio__label {
   display: inline-flex;
@@ -491,8 +469,8 @@ body {
 }
 .resource-audio audio {
   height: 36px;
-  max-width: 320px;
   width: 100%;
+  max-width: 340px;
   min-width: 0;
   flex: 1 1 auto;
 }
@@ -500,7 +478,6 @@ body {
   display: flex;
   gap: 10px;
   flex-wrap: wrap;
-  flex-shrink: 0;
 }
 .resource-link {
   display: inline-flex;
@@ -526,7 +503,7 @@ body {
 }
 @media (max-width: 768px) {
   .hero-info { width: 100%; }
-  .resources-card { max-width: 100%; padding: 20px 20px 22px; }
+  .resources-card { padding: 20px 20px 22px; }
   .resource-audio { flex-direction: column; align-items: stretch; }
   .resource-audio__label { align-self: flex-start; }
   .resource-audio audio { max-width: 100%; }
