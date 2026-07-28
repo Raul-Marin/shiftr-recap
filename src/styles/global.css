@@ -247,19 +247,15 @@ body {
   position: relative;
   display: inline-flex;
   align-items: center;
-  gap: 7px;
+  justify-content: center;
+  width: 40px;
   height: 40px;
-  padding: 0 15px;
   border-radius: 8px;
   border: 1px solid var(--hairline-strong);
   background: var(--surface-card);
   color: var(--ink);
-  font-family: var(--font-ui);
-  font-size: 14px;
-  font-weight: 600;
   cursor: pointer;
   flex-shrink: 0;
-  white-space: nowrap;
   transition: background .15s, border-color .15s, transform .1s;
 }
 .nav-share:hover { background: var(--surface-strong); }
@@ -1215,8 +1211,6 @@ footer {
 }
 
 @media (max-width: 480px) {
-  .nav-share__label { display: none; }
-  .nav-share { padding: 0 12px; }
   .nav-share__toast { right: auto; left: 50%; transform: translate(-50%, -4px); }
   .nav-share.is-copied .nav-share__toast { transform: translate(-50%, 0); }
   .hero { padding: 56px 16px 48px; }
