@@ -6,6 +6,13 @@ export const recap01: Recap = {
   accent: '#ffdd00',
   accentActive: '#e6c700',
   cover: 'recap-01-cover.png',
+  resources: {
+    audioSrc: 'recap-01-audio.m4a',
+    audioLabel: 'Agotamiento sin rechazo a la IA',
+    notebookUrl: 'https://notebooklm.google.com/notebook/62ea1c34-2742-4b80-9d00-bd1af27fb07a/preview',
+    infographicSrc: 'recap-01-infographic.png',
+    infographicAlt: 'Infografía resumen: Navegar la aceleración de la IA · manual de montaje para diseñadores',
+  },
   title: 'Recap [1] · Research Report · Shift+R',
   pageTitle: 'Recap [1] · Research Report · Shift+R',
   heroLabel: '[1] Research',
