@@ -4,15 +4,26 @@ import { withBase } from '../lib/paths';
 
 interface Props {
   title: string;
+  /** Shown in social previews (Open Graph / Twitter cards). */
+  description?: string;
   /** Per-session accent color, overrides --primary/--primary-active so each recap reads as distinct. */
   accent?: string;
   accentActive?: string;
 }
 
-const { title, accent, accentActive } = Astro.props;
+const {
+  title,
+  description = 'Análisis cualitativo de las sesiones de la comunidad Shift+R: señales, tensiones y hallazgos sobre cómo la IA está cambiando el oficio del diseño.',
+  accent,
+  accentActive,
+} = Astro.props;
 const accentStyle = accent
   ? `--primary:${accent};--primary-active:${accentActive ?? accent};`
   : undefined;
+
+const siteUrl = Astro.site ?? new URL('https://raul-marin.github.io');
+const canonicalURL = new URL(Astro.url.pathname, siteUrl).toString();
+const ogImageURL = new URL(withBase('images/og-image.png'), siteUrl).toString();
 ---
 
 <!doctype html>
@@ -21,10 +32,25 @@ const accentStyle = accent
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalURL} />
     <link rel="icon" type="image/png" href={withBase('favicon.png')} />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Re/cap · Shift+R" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:image" content={ogImageURL} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImageURL} />
   </head>
   <body style={accentStyle}>
     <slot />
@@ -51,6 +77,47 @@ const accentStyle = accent
 
         els.forEach((el) => observer.observe(el));
       }
+    </script>
+    <script>
+      document.querySelectorAll<HTMLButtonElement>('.nav-share').forEach((btn) => {
+        btn.addEventListener('click', async () => {
+          const shareData = { title: document.title, url: window.location.href };
+
+          if (navigator.share) {
+            try {
+              await navigator.share(shareData);
+            } catch {
+              /* user cancelled the native share sheet */
+            }
+            return;
+          }
+
+          let copied = false;
+          try {
+            await navigator.clipboard.writeText(shareData.url);
+            copied = true;
+          } catch {
+            try {
+              const input = document.createElement('input');
+              input.value = shareData.url;
+              input.style.position = 'fixed';
+              input.style.opacity = '0';
+              document.body.appendChild(input);
+              input.focus();
+              input.select();
+              copied = document.execCommand('copy');
+              document.body.removeChild(input);
+            } catch {
+              /* clipboard unavailable in this context */
+            }
+          }
+
+          if (copied) {
+            btn.classList.add('is-copied');
+            window.setTimeout(() => btn.classList.remove('is-copied'), 1800);
+          }
+        });
+      });
     </script>
   </body>
 </html>

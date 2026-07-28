@@ -204,6 +204,7 @@ body {
   font-weight: 500;
   color: var(--body);
   text-decoration: none;
+  white-space: nowrap;
   transition: color .15s;
 }
 .nav-links a:hover { color: var(--ink); }
@@ -239,6 +240,51 @@ body {
   text-decoration: none;
   display: inline-flex;
   align-items: center;
+}
+
+/* ── SHARE BUTTON (Figma-style) ── */
+.nav-share {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  height: 40px;
+  padding: 0 15px;
+  border-radius: 8px;
+  border: 1px solid var(--hairline-strong);
+  background: var(--surface-card);
+  color: var(--ink);
+  font-family: var(--font-ui);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  flex-shrink: 0;
+  white-space: nowrap;
+  transition: background .15s, border-color .15s, transform .1s;
+}
+.nav-share:hover { background: var(--surface-strong); }
+.nav-share:active { transform: translateY(1px); }
+.nav-share svg { flex-shrink: 0; }
+.nav-share__toast {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  background: var(--ink);
+  color: var(--canvas);
+  font-family: var(--font-ui);
+  font-size: 12px;
+  font-weight: 600;
+  padding: 7px 12px;
+  border-radius: 7px;
+  white-space: nowrap;
+  opacity: 0;
+  transform: translateY(-4px);
+  pointer-events: none;
+  transition: opacity .18s, transform .18s;
+}
+.nav-share.is-copied .nav-share__toast {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 /* ── HERO ── */
@@ -1169,6 +1215,10 @@ footer {
 }
 
 @media (max-width: 480px) {
+  .nav-share__label { display: none; }
+  .nav-share { padding: 0 12px; }
+  .nav-share__toast { right: auto; left: 50%; transform: translate(-50%, -4px); }
+  .nav-share.is-copied .nav-share__toast { transform: translate(-50%, 0); }
   .hero { padding: 56px 16px 48px; }
   .section { padding: 48px 16px; }
   .hero h1 { font-size: 32px; letter-spacing: -0.5px; }
