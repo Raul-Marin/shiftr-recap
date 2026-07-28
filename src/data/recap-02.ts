@@ -6,6 +6,13 @@ export const recap02: Recap = {
   accent: '#4dd8c4',
   accentActive: '#31b8a5',
   cover: 'recap-02-cover.png',
+  resources: {
+    audioSrc: 'recap-02-audio.m4a',
+    audioLabel: 'Acabaremos siendo los conserjes de la IA',
+    notebookUrl: 'https://notebooklm.google.com/notebook/6f87a404-e5aa-469e-aa83-a3e8722d9c74/preview',
+    infographicSrc: 'recap-02-infographic.jpg',
+    infographicAlt: 'Infografía resumen: Sobreviviendo al diseño en la era de la IA',
+  },
   title: 'Recap [2] · Research Report · Shift+R',
   pageTitle: 'Recap [2] · Research Report · Shift+R',
   heroLabel: '[2] Research',

@@ -69,6 +69,7 @@ Luego commit + push de `docs/`.
 
 1. Anuncia la fecha en `upcomingSessions` (`src/data/index.ts`) — aparece como "Próximamente" en el home y como pestaña deshabilitada en el nav de las demás sesiones.
 2. Cuando tengas el contenido, crea `src/data/recap-0N.ts` con el mismo shape que `recap-01.ts` (incluye `accent`, `accentActive` y `teaser`).
+   - Opcional: añade `resources` (`audioSrc`, `notebookUrl`, `infographicSrc`) para mostrar, justo debajo del hero, un reproductor de audio, un enlace a un cuaderno de NotebookLM y un enlace a una infografía resumen. Coloca los archivos en `public/audio/` y `public/images/`. Si no se define, esa barra no se muestra.
 3. Regístrala en `recaps` (`src/data/index.ts`) y quítala de `upcomingSessions`.
 4. Crea `src/pages/N/index.astro` (copia el patrón de `1/index.astro` o `2/index.astro`).
 5. Pon `published: true`. El diseño no cambia: `RecapPage` reutiliza la misma plantilla y el home/nav se actualizan solos.

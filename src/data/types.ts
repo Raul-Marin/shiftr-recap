@@ -66,6 +66,20 @@ export interface ChartRadar {
   fallback: string;
 }
 
+/** Extra media linked to a session: audio recap, a notebook to ask questions, and a summary infographic. */
+export interface RecapResources {
+  /** Filename (in public/audio/) of the audio summary. */
+  audioSrc?: string;
+  /** Label shown above the audio player. */
+  audioLabel?: string;
+  /** External URL (e.g. NotebookLM) to ask questions about the session. */
+  notebookUrl?: string;
+  /** Filename (in public/images/) of the summary infographic. */
+  infographicSrc?: string;
+  /** Alt text for the infographic. */
+  infographicAlt?: string;
+}
+
 export interface Recap {
   slug: string;
   number: number;
@@ -75,6 +89,8 @@ export interface Recap {
   accentActive: string;
   /** Filename (in public/images/) of this session's cover illustration. */
   cover: string;
+  /** Optional extra media: audio recap, notebook link, summary infographic. */
+  resources?: RecapResources;
   title: string;
   pageTitle: string;
   heroLabel: string;
