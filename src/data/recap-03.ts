@@ -6,6 +6,9 @@ export const recap03: Recap = {
   accent: '#ff7a59',
   accentActive: '#e55f3d',
   cover: 'recap-03-cover-v2.png',
+  resources: {
+    notebookUrl: 'https://notebook.google.com/notebook/19e625f3-494b-4611-82f6-da7241165b36/preview',
+  },
   title: 'Recap [3] · Research Report · Shift+R',
   pageTitle: 'Recap [3] · Research Report · Shift+R',
   heroLabel: '[3] Research',
