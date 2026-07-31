@@ -5,7 +5,7 @@ export const recap03: Recap = {
   number: 3,
   accent: '#ff7a59',
   accentActive: '#e55f3d',
-  cover: 'recap-03-cover.png',
+  cover: 'recap-03-cover-v2.png',
   title: 'Recap [3] · Research Report · Shift+R',
   pageTitle: 'Recap [3] · Research Report · Shift+R',
   heroLabel: '[3] Research',
