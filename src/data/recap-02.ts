@@ -5,7 +5,7 @@ export const recap02: Recap = {
   number: 2,
   accent: '#4dd8c4',
   accentActive: '#31b8a5',
-  cover: 'recap-02-cover.png',
+  cover: 'recap-02-cover-v2.png',
   resources: {
     audioSrc: 'recap-02-audio.m4a',
     audioLabel: 'Tu currículum, descartado en seis segundos',
