@@ -9,7 +9,7 @@ export const recap02: Recap = {
   resources: {
     audioSrc: 'recap-02-audio.m4a',
     audioLabel: 'Tu currículum, descartado en seis segundos',
-    notebookUrl: 'https://notebooklm.google.com/notebook/6f87a404-e5aa-469e-aa83-a3e8722d9c74/preview',
+    notebookUrl: 'https://notebook.google.com/notebook/6f87a404-e5aa-469e-aa83-a3e8722d9c74/preview',
     infographicSrc: 'recap-02-infographic.jpg',
     infographicAlt: 'Infografía resumen: Diseñar en la era de la IA · manual de montaje para personas y equipos',
   },
